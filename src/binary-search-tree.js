@@ -1,6 +1,6 @@
 const { NotImplementedError } = require("../extensions/index.js");
 
-const { Node } = require('../extensions/list-tree.js');
+const { Node } = require("../extensions/list-tree.js");
 
 /**
  * Implement simple binary search tree according to task description
@@ -24,14 +24,14 @@ class BinarySearchTree {
     const addInternally = (parentNode) => {
       if (data < parentNode.data) {
         if (parentNode.left) {
-          addInternally(data, parentNode.left);
+          addInternally(parentNode.left);
         } else {
           parentNode.left = new Node(data);
         }
       }
-      if (data > parentNode) {
+      if (data > parentNode.data) {
         if (parentNode.right) {
-          addInternally(data, parentNode.right);
+          addInternally(parentNode.right);
         } else {
           parentNode.right = new Node(data);
         }
@@ -41,9 +41,21 @@ class BinarySearchTree {
     addInternally(this.rootNode);
   }
 
-  has(/* data */) {
-    throw new NotImplementedError("Not implemented");
-    // remove line with error and write your code here
+  has(data) {
+    const hasInternally = (parentNode) => {
+      if (!parentNode) return false;
+
+
+      if (data === parentNode.data) return true;
+      if (data < parentNode.data) {
+        return hasInternally(parentNode.left);
+      }
+      if (data > parentNode.data) {
+        return hasInternally(parentNode.right);
+      }
+    };
+    // console.debug(this.rootNode);
+    return hasInternally(this.rootNode);
   }
 
   find(/* data */) {
