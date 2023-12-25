@@ -73,8 +73,51 @@ class BinarySearchTree {
   }
 
   remove(data) {
-    // throw new NotImplementedError("Not implemented");
-    // remove line with error and write your code here
+    const findParent = (node, currentNode) => {
+      if (!currentNode) return null;
+
+      if (currentNode.left === node || currentNode.right === node)
+        return currentNode;
+
+      return (
+        findParent(node, currentNode.left) ||
+        findParent(node, currentNode.right)
+      );
+    };
+
+    let nodeToDelete = this.find(data);
+    let parent = findParent(nodeToDelete, this.rootNode);
+
+    // delete leaf
+    if (!nodeToDelete.right && !nodeToDelete.left) {
+      if (parent.left === nodeToDelete) {
+        parent.left = null;
+      } else {
+        parent.right = null;
+      }
+    }
+    // delete node with two children
+    else if (nodeToDelete.right && nodeToDelete.left) {
+      // find min from right sub tree
+      const findMin = (parentNode) => {
+        return !parentNode.left ? parentNode.data : findMin(parentNode.left);
+      };
+      let min = findMin(nodeToDelete.right);
+      this.remove(min);
+      nodeToDelete.data = min;
+    }
+    // delete node with one child
+    else {
+      if (parent.left === nodeToDelete) {
+        parent.left = nodeToDelete.left
+          ? nodeToDelete.left
+          : nodeToDelete.right;
+      } else {
+        parent.right = nodeToDelete.right
+          ? nodeToDelete.right
+          : nodeToDelete.left;
+      }
+    }
   }
 
   min() {
