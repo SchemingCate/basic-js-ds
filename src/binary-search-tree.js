@@ -45,7 +45,6 @@ class BinarySearchTree {
     const hasInternally = (parentNode) => {
       if (!parentNode) return false;
 
-
       if (data === parentNode.data) return true;
       if (data < parentNode.data) {
         return hasInternally(parentNode.left);
@@ -54,14 +53,13 @@ class BinarySearchTree {
         return hasInternally(parentNode.right);
       }
     };
-    // console.debug(this.rootNode);
     return hasInternally(this.rootNode);
   }
 
   find(data) {
     const findInternally = (parentNode) => {
       if (!parentNode) return null;
-      
+
       if (data === parentNode.data) return parentNode;
       if (data < parentNode.data) {
         return findInternally(parentNode.left);
@@ -74,19 +72,25 @@ class BinarySearchTree {
     return findInternally(this.rootNode);
   }
 
-  remove(/* data */) {
-    throw new NotImplementedError("Not implemented");
+  remove(data) {
+    // throw new NotImplementedError("Not implemented");
     // remove line with error and write your code here
   }
 
   min() {
-    throw new NotImplementedError("Not implemented");
-    // remove line with error and write your code here
+    if (!this.rootNode) return null;
+    const findMin = (parentNode) => {
+      return !parentNode.left ? parentNode.data : findMin(parentNode.left);
+    };
+    return findMin(this.rootNode);
   }
 
   max() {
-    throw new NotImplementedError("Not implemented");
-    // remove line with error and write your code here
+    if (!this.rootNode) return null;
+    const findMax = (parentNode) => {
+      return !parentNode.right ? parentNode.data : findMax(parentNode.right);
+    };
+    return findMax(this.rootNode);
   }
 }
 
