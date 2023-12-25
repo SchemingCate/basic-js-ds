@@ -58,9 +58,20 @@ class BinarySearchTree {
     return hasInternally(this.rootNode);
   }
 
-  find(/* data */) {
-    throw new NotImplementedError("Not implemented");
-    // remove line with error and write your code here
+  find(data) {
+    const findInternally = (parentNode) => {
+      if (!parentNode) return null;
+      
+      if (data === parentNode.data) return parentNode;
+      if (data < parentNode.data) {
+        return findInternally(parentNode.left);
+      }
+      if (data > parentNode.data) {
+        return findInternally(parentNode.right);
+      }
+    };
+
+    return findInternally(this.rootNode);
   }
 
   remove(/* data */) {
